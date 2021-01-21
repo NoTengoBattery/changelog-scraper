@@ -9,3 +9,4 @@ gem 'optparse', require: true
 gem 'pry', group: :development
 gem 'rspec', group: %i[development test]
 gem 'rubocop', group: :development
+gem 'uri', require: true
