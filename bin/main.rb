@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/argparser'
 require_relative '../lib/utilities'
+require_relative '../lib/argparser'
+require_relative '../lib/http'
 
 options_parser = GitHubLogManOptparser.new
 begin
@@ -17,10 +18,9 @@ url = options.url.freeze
 
 MyUtils.pinfo "URL to request: #{url}" if verbose
 begin
-  http_object = HTTP.get(url)
-  status_code = http_object.status.code
-  MyUtils.pinfo "HTTP Request status code: #{status_code}" if verbose
-  raise HTTP::ConnectionError, "HTTP request did not succeed: server status code #{status_code}" if status_code != 200
+  http_object = StrictHTTP.strict_get(url)
+  status = http_object.status.code
+  MyUtils.pinfo "HTTP Request status code: #{status}" if verbose
 rescue HTTP::ConnectionError => e
   MyUtils.perr e
   MyUtils.perr nil
