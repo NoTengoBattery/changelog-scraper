@@ -25,7 +25,10 @@ class GitHubLogManOptparser
     end
 
     def define_options(parser)
-      parser.banner = "\e[1mUsage: #{parser.program_name} [options] -u URL\e[0m"
+      parser.banner =
+        "\e[1m
+Usage: #{parser.program_name} [options] -u URL
+Usage: #{parser.program_name} [options] --url URL\e[0m"
       parser.separator "Options can be 'long' when using the double minus or 'short' when using a single minus."
       parser.separator 'Except for the URL, all options are optional.'
       parser.separator nil
