@@ -2,8 +2,10 @@ AllCops:
   Exclude:
     - "Guardfile"
     - "Rakefile"
-
+    - "vendor/**/*"
+  NewCops: enable
   DisplayCopNames: true
+  TargetRubyVersion: 2.7
 
 Layout/LineLength:
   Max: 120
@@ -14,7 +16,7 @@ Metrics/AbcSize:
 Metrics/ClassLength:
   Max: 150
 Metrics/BlockLength:
-  ExcludedMethods: ['describe']
+  IgnoredMethods: ['describe']
   Max: 30
 
 
