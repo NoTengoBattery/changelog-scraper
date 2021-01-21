@@ -2,7 +2,10 @@
 
 OptionParser.accept(URI) do |url|
   uri = URI.parse(url) if url
-  raise 'Invalid URL provied, try providing a URL like https://github.com/...' unless uri.is_a?(URI::HTTP)
+  unless uri.is_a?(URI::HTTP)
+    raise OptionParser::InvalidArgument,
+          'Invalid URL provied, try providing a URL like https://github.com/...'
+  end
 
   uri
 end
