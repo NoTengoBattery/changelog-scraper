@@ -47,16 +47,19 @@ module Provider
     get_html(url) if @valid
     MyUtils.pinfo "Scraping a #{self.class} #{@changelog_type}..." if @valid
     scraped = scrape if @valid
+    @dom = nil
     MyUtils.pinfo "Scraping #{scraped ? 'succeeded' : 'failed'}"
   end
 end
 
-require_relative 'providers'
-
 class NoProviderError < StandardError; end
 
+class ScraperError < StandardError; end
+
+require_relative 'providers'
+
 class ProviderFactory
-  # Add new providers here, just by pushing the class into the @providers array. Do not modify anything else.
+  # Add new providers here by pushing the class into the @providers array. Do not modify anything else.
   def initialize
     @providers = []
     @providers << GitHub
