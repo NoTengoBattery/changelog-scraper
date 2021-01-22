@@ -62,7 +62,7 @@ class ProviderFactory
   # Add new providers here by pushing the class into the @providers array. Do not modify anything else.
   def initialize
     @providers = []
-    @providers << GitHub
+    @providers << GitHubProvider
   end
 
   def build(url)

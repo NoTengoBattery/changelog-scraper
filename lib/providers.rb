@@ -2,7 +2,7 @@
 
 # - if you want to extend the functionality, add more providers here and don't forget to also add them to the factory -
 
-class GitHub
+class GitHubProvider
   include Provider
   def initialize(url)
     super

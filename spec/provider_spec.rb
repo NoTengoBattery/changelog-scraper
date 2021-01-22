@@ -12,7 +12,7 @@ RSpec.describe 'ProviderFactory' do
     let(:github) { URI.parse(OPENWRT_GITHUB_PR) }
     let(:github_invalid) { URI.parse(OPENWRT_GITHUB) }
     it 'returns a GitHub provider when a valid GitHub link is given' do
-      expect(factory.build(github)).to be_a(GitHub)
+      expect(factory.build(github)).to be_a(GitHubProvider)
     end
     it 'throws an error when an invalid GitHub link is given' do
       expect { factory.build(github_invalid) }.to raise_error(NoProviderError)
@@ -27,14 +27,14 @@ RSpec.describe 'Provider' do
   describe 'GitHub' do
     let(:github) { URI.parse(OPENWRT_GITHUB_PR) }
     let(:github_invalid) { URI.parse(OPENWRT_GITHUB) }
-    let(:github_provider) { GitHub.new(github) }
-    let(:github_provider_invalid) { GitHub.new(github_invalid) }
+    let(:github_provider) { GitHubProvider.new(github) }
+    let(:github_provider_invalid) { GitHubProvider.new(github_invalid) }
     it 'scrapes a valid GitHub Pull Request' do
-      expect(github_provider).to be_a(GitHub)
+      expect(github_provider).to be_a(GitHubProvider)
       expect(github_provider.valid).to be_truthy
     end
     it 'rejects a GitHub page that is not supported' do
-      expect(github_provider_invalid).to be_a(GitHub)
+      expect(github_provider_invalid).to be_a(GitHubProvider)
       expect(github_provider_invalid.valid).to be_falsy
     end
   end
