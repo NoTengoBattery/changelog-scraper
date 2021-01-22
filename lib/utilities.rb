@@ -7,25 +7,42 @@ module MyUtils
     if msg.nil?
       warn msg
     else
-      warn("#{intro}: #{msg}")
+      warn("#{intro}#{msg}")
     end
   end
 
-  def self.perr(args)
+  def self.perr(arg)
     Blessings.red
-    custom_p('ERROR', args)
+    custom_p('ERROR: ', arg)
     Blessings.reset_color
   end
 
-  def self.pwarn(args)
+  def self.pex(arg)
+    Blessings.red
+    custom_p("ERROR: #{arg.class} ~> ", arg)
+    Blessings.reset_color
+  end
+
+  def self.pwarn(arg)
     Blessings.yellow
-    custom_p('WARNING', args)
+    custom_p('WARNING: ', arg)
     Blessings.reset_color
   end
 
-  def self.pinfo(args)
+  def self.pinfo(arg)
     Blessings.blue
-    custom_p('INFO', args)
+    custom_p('INFO: ', arg)
     Blessings.reset_color
+  end
+
+  def self.array_to_list(array)
+    array.reduce { |c, v| "#{c}, #{v}" }
+  end
+
+  def self.exit_on_exception(exeption, message, code)
+    perr exeption
+    perr nil
+    perr message
+    exit code
   end
 end
