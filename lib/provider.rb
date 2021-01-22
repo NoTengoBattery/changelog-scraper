@@ -3,7 +3,7 @@
 require_relative 'git'
 require_relative 'http'
 
-class Provider
+module Provider
   attr_reader :valid
 
   def initialize(*)
@@ -64,7 +64,7 @@ class ProviderFactory
     @providers.each do |provider|
       MyUtils.pinfo "Checking if provider '#{provider}' can handle the URL..." if $verbose
       provider_built = provider.new(url)
-      return provider_built if provider_built.valid
+      return provider_built if provider_built.valid and provider_built.is_a?(Provider)
 
       MyUtils.pinfo "Provider '#{provider}' can not handle the URL" if $verbose
     end

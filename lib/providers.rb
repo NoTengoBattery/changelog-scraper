@@ -2,7 +2,8 @@
 
 # - if you want to extend the functionality, add more providers here and don't forget to also add them to the factory -
 
-class GitHub < Provider
+class GitHub
+  include Provider
   def initialize(url)
     super
     @host = 'github.com'
