@@ -1,42 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'http'
-require_relative 'git'
-
-class Provider
-  attr_reader :host, :valid
-
-  def initialize(*)
-    @host = 'nodomain.com'
-    @name = 'Generic Provider'
-    @changelog = MergeRequest
-    @supported = {}
-    @valid = false
-  end
-
-  private
-
-  def url_validator(url)
-    provider = self.class
-    @supported.each do |key, val|
-      break unless url.host == @host
-
-      MyUtils.pinfo "#{provider}: Checking if changelog type '#{key}' supports this URL..." if $verbose
-      request = url.request_uri
-      next unless request.include? key.to_s
-
-      MyUtils.pinfo "#{provider}: Changelog type '#{key}' support this URL" if $verbose
-      @valid = true
-      @changelog = val
-      break
-    end
-    @valid
-  end
-
-  def get_html(url); end
-end
-
-# - if you want to extend the functionality, add more providers here and don't forget to add them to the factory too -
+# - if you want to extend the functionality, add more providers here and don't forget to also add them to the factory -
 
 class GitHub < Provider
   def initialize(url)
@@ -44,6 +8,33 @@ class GitHub < Provider
     @host = 'github.com'
     @name = 'GitHub'
     @supported[:pull] = MergeRequest
-    get_html(url) if url_validator(url)
+    build_provider(url)
+  end
+
+  private
+
+  # Because of how Nokogiri works, scrape methods may trigger Metric/AbcSize hint due to chained calls
+  def scrape_pull_request
+    puts "MR TITLE: #{@dom.css('.gh-header-title span').first.children.text}"
+    puts "MR ID => #{@dom.css('.gh-header-title span').last.children.text}"
+    puts "MR Status => #{@dom.css('.gh-header-meta span').first.text}"
+    puts "MR Base => #{@dom.css('.commit-ref a').first.attributes['title'].value}"
+    puts "MR Dest => #{@dom.css('.commit-ref a').last.attributes['title'].value}"
+    puts "MR Author => #{@dom.css('.timeline-comment-header-text .author').first.text}"
+    puts "PR Time => #{@dom.css('.timeline-comment-header-text relative-time').first.attributes['datetime'].value}"
+    @dom.css('.js-commit-group-commits .pr-1 code a.link-gray').each do |commit|
+      puts "\tCommit Title => #{first_line(commit.attributes['title'].value)}"
+      puts "\tCommit Hash => #{commit.attributes['href'].value.split('/').last}"
+    end
+  end
+
+  def scrape()
+    @changelog = @changelog_type.new
+    case @changelog
+    when MergeRequest
+      scrape_pull_request
+    else
+      false
+    end
   end
 end
