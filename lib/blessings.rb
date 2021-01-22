@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-# Brief description: Blessings is a Ruby module inspired in "curses"
 module Blessings
   def self.insert_newline(lines)
     lines.times do

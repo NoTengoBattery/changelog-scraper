@@ -3,8 +3,7 @@
 OptionParser.accept(URI) do |url|
   uri = URI.parse(url) if url
   unless uri.is_a?(URI::HTTP)
-    raise OptionParser::InvalidArgument,
-          'Invalid URL provied, try providing a URL like https://github.com/...'
+    raise OptionParser::InvalidArgument, 'Invalid URL provied, try providing a URL like https://github.com/...'
   end
 
   uri
@@ -28,15 +27,14 @@ class GitHubLogManOptparser
     end
 
     def define_options(parser)
-      parser.banner =
-        "\e[1m
+      parser.banner = "\e[1m
 Usage: #{parser.program_name} [options] -u URL
 Usage: #{parser.program_name} [options] --url URL\e[0m"
       parser.separator "Options can be 'long' when using the double minus or 'short' when using a single minus."
       parser.separator 'Except for the URL, all options are optional.'
       parser.separator nil
       parser.separator "Use \e[4mControl+C\e[0m in the terminal to exit the full-screen view."
-      parser.separator 'Use the shell redirection to write out the text-plain view into a file.'
+      parser.separator 'Use the shell redirection to write out the text-plain view or pipe it to other tools.'
       parser.separator nil
       option_verbose(parser)
       option_uri(parser)

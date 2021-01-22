@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/utilities'
+require_relative 'utilities'
 
 module StrictHTTP
   include HTTP

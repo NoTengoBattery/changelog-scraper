@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative '../lib/argparser'
-require_relative '../lib/http'
+require_relative '../lib/provider'
 
 options_parser = GitHubLogManOptparser.new
 begin
@@ -16,7 +16,7 @@ end
 verbose = options.verbose.freeze
 url = options.url.freeze
 
-MyUtils.pinfo "URL to request: #{url}" if verbose
+MyUtils.pinfo "User provided URL: #{url}" if verbose
 
 begin
   StrictHTTP.validate_provider(url)
@@ -43,6 +43,7 @@ MyUtils.pinfo 'Got response from server, ready to parse' if verbose
 
 document = Nokogiri::HTML(http_object.to_s)
 
+ProviderFactory.new.build(url)
 puts "PR Title => #{document.css('.gh-header-title').css('span').first.children.text.strip}"
 puts "PR ID => #{document.css('.gh-header-title').css('span').last.children.text.strip}"
 puts "PR Status => #{document.css('.gh-header-meta').css('span').first.text.strip}"
