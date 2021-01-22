@@ -36,6 +36,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.11.1-x64-mingw32)
       racc (~> 1.4)
+    nokogiri (1.11.1-x86-linux)
+      racc (~> 1.4)
     nokogiri (1.11.1-x86-mingw32)
       racc (~> 1.4)
     nokogiri (1.11.1-x86_64-darwin)
@@ -100,11 +102,15 @@ GEM
 PLATFORMS
   java
   ruby
-  x64-mingw32
-  x86-mingw32
+  universal-java
+  universal-linux
+  universal-macruby
+  universal-mingw32
+  universal-mswin32
+  universal-unknown
   x86-mswin32
+  x86_64-darwin
   x86_64-darwin-19
-  x86_64-linux
 
 DEPENDENCIES
   curses
@@ -120,4 +126,4 @@ RUBY VERSION
    ruby 2.7
 
 BUNDLED WITH
-   2.2.3
+   2.1.4
