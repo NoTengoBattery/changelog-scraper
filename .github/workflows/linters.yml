@@ -13,7 +13,8 @@ jobs:
           ruby-version: 2.7.x
       - name: Setup Rubocop
         run: |
-          gem install --no-document rubocop:'~>1.8.1' # https://docs.rubocop.org/en/stable/installation/
+          bundle update --bundler
+          [ -f Gemfile ] && bundle
           [ -f .rubocop.yml ] || wget https://raw.githubusercontent.com/microverseinc/linters-config/master/ruby/.rubocop.yml
       - name: Rubocop Report
-        run: rubocop --color
+        run: bundle exec rubocop --color
