@@ -9,4 +9,5 @@ gem 'optparse', require: true
 gem 'pry-byebug', group: :development
 gem 'rspec', group: %i[development test]
 gem 'rubocop', group: :development
+gem 'time', require: true
 gem 'uri', require: true

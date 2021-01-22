@@ -7,6 +7,7 @@ GEM
     byebug (11.1.3)
     coderay (1.1.3)
     curses (1.4.0)
+    date (3.1.0)
     diff-lcs (1.4.4)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -92,6 +93,8 @@ GEM
     ruby-progressbar (1.11.0)
     spoon (0.0.6)
       ffi
+    time (0.1.0)
+      date
     unf (0.1.4)
       unf_ext
     unf (0.1.4-java)
@@ -120,6 +123,7 @@ DEPENDENCIES
   pry-byebug
   rspec
   rubocop
+  time
   uri
 
 RUBY VERSION

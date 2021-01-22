@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 # - if you want to extend the functionality, add more providers here and don't forget to also add them to the factory -
+# Because of how Nokogiri works, scrape methods may trigger Metric/AbcSize hint due to chained calls
 
 class GitHubProvider
   include Provider
@@ -14,9 +15,8 @@ class GitHubProvider
 
   private
 
-  # Because of how Nokogiri works, scrape methods may trigger Metric/AbcSize hint due to chained calls
   def scrape_pull_request
-    puts "MR TITLE: #{@dom.css('.gh-header-title span').first.children.text}"
+    puts "MR TITLE => #{@dom.css('.gh-header-title span').first.children.text}"
     puts "MR ID => #{@dom.css('.gh-header-title span').last.children.text}"
     puts "MR Status => #{@dom.css('.gh-header-meta span').first.text}"
     puts "MR Base => #{@dom.css('.commit-ref a').first.attributes['title'].value}"
