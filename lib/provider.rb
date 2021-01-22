@@ -13,9 +13,12 @@ class ProviderFactory
 
   def build(url)
     @providers.each do |provider|
+      MyUtils.pinfo "Checking if provider '#{provider}' can handle the URL..." if $verbose
       provider_built = provider.new(url)
-      return new_provider if provider_built.valid
+      return provider_built if provider_built.valid
+
+      MyUtils.pinfo "Provider '#{provider}' can not handle the URL" if $verbose
     end
-    raise NoProvierError, 'The given URL does not match any know provider'
+    raise NoProvierError, 'The given URL is not supported by any provider'
   end
 end

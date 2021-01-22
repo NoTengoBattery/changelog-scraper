@@ -17,16 +17,20 @@ class Provider
   private
 
   def url_validator(url)
+    provider = self.class
     @supported.each do |key, val|
-      break if url.host == @host
+      break unless url.host == @host
 
+      MyUtils.pinfo "#{provider}: Checking if changelog type '#{key}' supports this URL..." if $verbose
       request = url.request_uri
       next unless request.include? key.to_s
 
+      MyUtils.pinfo "#{provider}: Changelog type '#{key}' support this URL" if $verbose
       @valid = true
       @changelog = val
       break
     end
+    @valid
   end
 
   def get_html(url); end
