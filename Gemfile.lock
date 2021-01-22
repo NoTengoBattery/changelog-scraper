@@ -11,6 +11,9 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     ffi (1.14.2)
+    ffi (1.14.2-java)
+    ffi (1.14.2-x64-mingw32)
+    ffi (1.14.2-x86-mingw32)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -25,7 +28,21 @@ GEM
     http-parser (1.2.3)
       ffi-compiler (>= 1.0, < 2.0)
     method_source (1.0.0)
+    mini_portile2 (2.5.0)
+    nokogiri (1.11.1)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
+    nokogiri (1.11.1-java)
+      racc (~> 1.4)
+    nokogiri (1.11.1-x64-mingw32)
+      racc (~> 1.4)
+    nokogiri (1.11.1-x86-linux)
+      racc (~> 1.4)
+    nokogiri (1.11.1-x86-mingw32)
+      racc (~> 1.4)
     nokogiri (1.11.1-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.11.1-x86_64-linux)
       racc (~> 1.4)
     optparse (0.1.0)
     parallel (1.20.1)
@@ -34,11 +51,16 @@ GEM
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    pry (0.13.1-java)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+      spoon (~> 0.0)
     pry-byebug (3.9.0)
       byebug (~> 11.0)
       pry (~> 0.13.0)
     public_suffix (4.0.6)
     racc (1.5.2)
+    racc (1.5.2-java)
     rainbow (3.0.0)
     rake (13.0.3)
     regexp_parser (2.0.3)
@@ -68,13 +90,26 @@ GEM
     rubocop-ast (1.4.0)
       parser (>= 2.7.1.5)
     ruby-progressbar (1.11.0)
+    spoon (0.0.6)
+      ffi
     unf (0.1.4)
       unf_ext
+    unf (0.1.4-java)
     unf_ext (0.0.7.7)
     unicode-display_width (2.0.0)
     uri (0.10.1)
 
 PLATFORMS
+  java
+  ruby
+  universal-java
+  universal-linux
+  universal-macruby
+  universal-mingw32
+  universal-mswin32
+  universal-unknown
+  x86-mswin32
+  x86_64-darwin
   x86_64-darwin-19
 
 DEPENDENCIES
@@ -87,5 +122,8 @@ DEPENDENCIES
   rubocop
   uri
 
+RUBY VERSION
+   ruby 2.7
+
 BUNDLED WITH
-   2.2.3
+   2.1.4
