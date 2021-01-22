@@ -32,10 +32,6 @@ Style/DefWithParentheses:
   Enabled: false
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
-Style/GlobalVars:
-  AllowedVariables:
-    - $verbose
-
 
 Layout/HashAlignment:
   EnforcedColonStyle: key

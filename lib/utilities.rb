@@ -3,12 +3,14 @@
 require_relative 'blessings'
 
 module MyUtils
-  private_class_method def self.custom_p(intro, msg)
-    if msg.nil?
-      warn msg
-    else
-      warn("#{intro}#{msg}")
-    end
+  attr_reader :verbose
+
+  def initialize
+    @verbose = false
+  end
+
+  def self.verbose
+    @verbose = true
   end
 
   def self.perr(arg)
@@ -30,6 +32,8 @@ module MyUtils
   end
 
   def self.pinfo(arg)
+    return unless @verbose
+
     Blessings.blue
     custom_p('INFO: ', arg)
     Blessings.reset_color
@@ -44,5 +48,13 @@ module MyUtils
     perr nil
     perr message
     exit code
+  end
+
+  private_class_method def self.custom_p(intro, msg)
+    if msg.nil?
+      warn msg
+    else
+      warn("#{intro}#{msg}")
+    end
   end
 end

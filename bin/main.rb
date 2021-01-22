@@ -13,8 +13,6 @@ rescue OptionParser::ParseError => e
     PARSER_ECODE
   )
 end
-$verbose = options.verbose.freeze
-url = options.url.freeze
+MyUtils.verbose if options.verbose
 
-MyUtils.pinfo "User provided URL: #{url}" if $verbose
-ProviderFactory.new.build(url)
+ProviderFactory.new.build(options.url)

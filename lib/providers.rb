@@ -31,11 +31,13 @@ class GitHub
 
   def scrape()
     @changelog = @changelog_type.new
+    scraped = true
     case @changelog
     when MergeRequest
       scrape_pull_request
     else
-      false
+      scraped = false
     end
+    scraped
   end
 end

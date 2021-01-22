@@ -17,10 +17,10 @@ module Provider
     @supported.each do |key, val|
       break unless url.host == @host
 
-      MyUtils.pinfo "#{provider}: Checking if changelog type '#{key}' supports this URL..." if $verbose
+      MyUtils.pinfo "#{provider}: Checking if changelog type '#{key}' supports this URL..."
       next unless url.request_uri.include? key.to_s
 
-      MyUtils.pinfo "#{provider}: Changelog type '#{key}' support this URL" if $verbose
+      MyUtils.pinfo "#{provider}: Changelog type '#{key}' support this URL"
       @valid = true
       @changelog_type = val
       break
@@ -29,23 +29,25 @@ module Provider
   end
 
   def get_html(url)
-    MyUtils.pinfo 'Downloading the webpage...' if $verbose
+    MyUtils.pinfo 'Downloading the webpage...'
     @dom = Nokogiri::HTML(StrictHTTP.strict_get(url).to_s)
-    MyUtils.pinfo 'Webpage downloaded successfully' if $verbose
+    MyUtils.pinfo 'Webpage downloaded successfully'
   end
 
-  def scrape(); end
+  def scrape()
+    raise NotImplementedError, "Please create a provider than inherits from #{Provider} and implement `scrape`."
+  end
 
   def first_line(line)
-    line.strip.split("\n").first.strip
+    line.strip.split("\n").first
   end
 
   def build_provider(url)
-    url_validated = url_validator(url)
-    get_html(url) if url_validated
-    MyUtils.pinfo 'Executing the scraper...' if $verbose
-    scraped = scrape if url_validated
-    MyUtils.pinfo "Scraping #{scraped ? 'succeeded' : 'failed'}" if $verbose
+    url_validator(url)
+    get_html(url) if @valid
+    MyUtils.pinfo "Scraping a #{self.class} #{@changelog_type}..." if @valid
+    scraped = scrape if @valid
+    MyUtils.pinfo "Scraping #{scraped ? 'succeeded' : 'failed'}"
   end
 end
 
@@ -62,11 +64,11 @@ class ProviderFactory
 
   def build(url)
     @providers.each do |provider|
-      MyUtils.pinfo "Checking if provider '#{provider}' can handle the URL..." if $verbose
+      MyUtils.pinfo "Checking if provider '#{provider}' can handle the URL..."
       provider_built = provider.new(url)
       return provider_built if provider_built.valid and provider_built.is_a?(Provider)
 
-      MyUtils.pinfo "Provider '#{provider}' can not handle the URL" if $verbose
+      MyUtils.pinfo "Provider '#{provider}' can not handle the URL"
     end
     raise NoProviderError, 'The given URL is not supported by any provider'
   end
