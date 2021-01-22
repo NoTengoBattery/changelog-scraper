@@ -43,6 +43,14 @@ MyUtils.pinfo 'Got response from server, ready to parse' if verbose
 
 document = Nokogiri::HTML(http_object.to_s)
 
+puts "PR Title => #{document.css('.gh-header-title').css('span').first.children.text.strip}"
+puts "PR ID => #{document.css('.gh-header-title').css('span').last.children.text.strip}"
+puts "PR Status => #{document.css('.gh-header-meta').css('span').first.text.strip}"
+puts "PR Base => #{document.css('.commit-ref').css('.css-truncate-target').first.children.text.strip.split("\n").first}"
+puts "PR Dest => #{document.css('.commit-ref').css('.css-truncate-target').last.children.text.strip.split("\n").first}"
+puts "PR Author => #{document.css('.timeline-comment-header-text').css('.author').first.text}"
+puts "PR T => #{document.css('.timeline-comment-header-text').css('relative-time').first.attributes['datetime'].value}"
 document.css('.js-commit-group-commits').css('.pr-1').css('code').each do |link|
-  puts "Commit title => #{link.css('a').first.attributes['title'].value.split("\n").first}"
+  puts "Commit Title => #{link.css('a').first.attributes['title'].value.strip.split("\n").first}"
+  puts "Commit Hash => #{link.css('a').first.attributes['href'].value.split('/').last}"
 end
