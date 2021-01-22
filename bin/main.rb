@@ -40,3 +40,9 @@ rescue HTTP::ConnectionError, HTTP::TimeoutError => e
   )
 end
 MyUtils.pinfo 'Got response from server, ready to parse' if verbose
+
+document = Nokogiri::HTML(http_object.to_s)
+
+document.css('.js-commit-group-commits').css('.pr-1').css('code').each do |link|
+  puts "Commit title => #{link.css('a').first.attributes['title'].value.split("\n").first}"
+end
