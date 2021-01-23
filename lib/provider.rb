@@ -68,13 +68,13 @@ module Provider
   end
 end
 
-require_relative 'providers'
+require_relative 'scrapers'
 
 # Add new providers here by pushing the class into the @providers array. Do not modify anything else.
 class ProviderFactory
   def initialize
     @providers = []
-    @providers << GitHubProvider
+    @providers << GitHubScraper
   end
 
   def build(url)
