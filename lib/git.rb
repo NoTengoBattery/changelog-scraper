@@ -1,13 +1,45 @@
 #!/usr/bin/env ruby
 
-class MergeRequest
-  def initialize
-    @title
+class GitMessage
+  attr_reader :time, :url
+  attr_accessor :subject, :id, :message, :author, :name
+
+  def initialize(name = 'Git Message')
+    @name = name
+  end
+
+  def url=(uri)
+    uri.is_a?(URI) ? (@url = uri) : raise(ArgumentError, "Expected an object of type #{URI}")
+  end
+
+  def time=(time)
+    case time
+    when Time
+      @time = time
+    when String, Numeric
+      @time = Time.parse(time)
+    else
+      raise(ArgumentError, "Expected a #{Time} object, a convertible #{String}, or a #{Numeric} value")
+    end
   end
 end
 
-class Commit
-  def initialize
-    @title
+class Commit < GitMessage
+  def initialize(name = 'Git Commit')
+    super
+  end
+end
+
+class MergeRequest < GitMessage
+  attr_reader :commits
+  attr_accessor :status, :target_branch, :base_branch
+
+  def initialize(name = 'Merge Request')
+    super
+    @commits = []
+  end
+
+  def commits=(commit)
+    commit.is_a?(Commit) ? (@commits << commit) : raise(ArgumentError, "Expected an object of type #{Commit}")
   end
 end

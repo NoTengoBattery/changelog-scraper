@@ -3,7 +3,7 @@
 module Blessings
   def self.insert_newline(lines)
     lines.times do
-      print "\n"
+      print("\n")
     end
   end
 
@@ -54,13 +54,13 @@ module Blessings
 
   def self.horizontal_bar(content, repetitions)
     repetitions.times do
-      print content
+      print(content)
     end
   end
 
   def self.vertical_bar(content, repetitions)
     repetitions.times do
-      print content
+      print(content)
       relative_move_to(-content.length, 1)
     end
     relative_move_to(content.length, -1)
@@ -68,7 +68,7 @@ module Blessings
 
   def self.relative_print_at(content, horizontal, vertical)
     relative_move_to(horizontal, vertical)
-    print content
+    print(content)
   end
 
   private_class_method def self.top_square_border(border, side_length)

@@ -5,7 +5,7 @@ AllCops:
     - "vendor/**/*"
   NewCops: enable
   DisplayCopNames: true
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 2.5
 
 Layout/LineLength:
   Max: 120

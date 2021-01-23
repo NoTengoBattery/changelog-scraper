@@ -1,0 +1,5 @@
+run="bundle exec ruby main.rb -u https://github.com/NoTengoBattery/GitHubLogMan/pull/1"
+language="ruby"
+
+[packager]
+ignoredPaths=[".bundle", ".git", ".github", "spec", "vendor"]

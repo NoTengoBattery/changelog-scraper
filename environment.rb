@@ -4,5 +4,5 @@ PARSER_ECODE = 1
 HTTP_ECODE = 2
 PROVIDER_ECODE = 3
 
-require 'bundler'
+require 'bundler/inline'
 Bundler.require(:default)
