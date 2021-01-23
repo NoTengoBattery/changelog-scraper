@@ -31,10 +31,7 @@ module Provider
         @changelog_type = val
         break
       end
-      unless @valid
-        raise(NoProviderHandlerError,
-              "The URL is a malformed #{@name} webpage, and #{@name} can not handle it")
-      end
+      raise(NoProviderHandlerError, "The URL is a malformed #{@name} webpage and can not be handled") unless @valid
     end
     @valid
   end

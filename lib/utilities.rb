@@ -3,14 +3,12 @@
 require_relative 'blessings'
 
 module MyUtils
-  attr_reader :verbose
-
-  def initialize
+  def self.initialize
     @verbose = false
   end
 
-  def self.verbose
-    @verbose = true
+  def self.verbose=(val)
+    @verbose = val
   end
 
   def self.perr(arg)
@@ -39,20 +37,24 @@ module MyUtils
     Blessings.reset_color
   end
 
+  def self.note(arg)
+    custom_p('NOTE: ', arg)
+  end
+
   def self.array_to_list(array)
     array.reduce { |c, v| "#{c}, #{v}" }
   end
 
   def self.exit_on_exception(exeption, message, code)
-    perr exeption
-    perr nil
-    perr message
-    exit code
+    perr("#{exeption.class}: #{exeption}")
+    perr(nil)
+    perr(message)
+    exit(code)
   end
 
   private_class_method def self.custom_p(intro, msg)
     if msg.nil?
-      warn msg
+      warn(msg)
     else
       warn("#{intro}#{msg}")
     end
