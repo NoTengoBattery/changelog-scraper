@@ -4,7 +4,7 @@ class GitMessage
   attr_reader :time, :url
   attr_accessor :subject, :id, :message, :author, :name
 
-  def initialize(name = 'Git Message')
+  def initialize(name = 'Message')
     @name = name
   end
 
@@ -25,16 +25,15 @@ class GitMessage
 end
 
 class Commit < GitMessage
-  def initialize(name = 'Git Commit')
+  def initialize(name = 'Commit')
     super
   end
 end
 
-class MergeRequest < GitMessage
+class Changelog < GitMessage
   attr_reader :commits
-  attr_accessor :status, :target_branch, :base_branch
 
-  def initialize(name = 'Merge Request')
+  def initialize(name = 'Changelog')
     super
     @commits = []
   end
@@ -42,4 +41,11 @@ class MergeRequest < GitMessage
   def commits=(commit)
     commit.is_a?(Commit) ? (@commits << commit) : raise(ArgumentError, "Expected an object of type #{Commit}")
   end
+end
+
+class MergeRequest < Changelog
+  def initialize(name = 'Merge Request')
+    super
+  end
+  attr_accessor :status, :target_branch, :base_branch
 end

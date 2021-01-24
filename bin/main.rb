@@ -32,7 +32,7 @@ rescue HTTP::ConnectionError => e
   )
 rescue ScraperError => e
   MyUtils.exit_on_exception(
-    e, "Please report this issue to the mantainer. Do not forget to provide the requested URL: #{options.url}",
+    e, 'Please report this issue to the mantainer. Enable the verbose mode and send a copy of the full log.',
     PARSER_ECODE
   )
 end
