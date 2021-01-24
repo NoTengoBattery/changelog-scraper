@@ -2,6 +2,9 @@
 
 require_relative '../lib/argparser'
 require_relative '../lib/provider'
+require_relative '../lib/printer'
+
+Blessings.output_stream = $stderr
 
 begin
   options = GitHubLogManOptparser.new.parse(ARGV)
@@ -19,21 +22,24 @@ MyUtils.note('This process may take a while for large changelogs.')
 MyUtils.note('Enable the verbose mode to see the proccess as it runs.')
 MyUtils.note('For more information about the usage of this script, run it with the -h flag.')
 begin
-  ProviderFactory.new.build(options.url)
+  provider = ProviderFactory.new.build(options.url)
 rescue NoProviderError => e
   MyUtils.exit_on_exception(
     e, 'Run this scirpt with the verbose option to see all the available providers. For more help use the -h flag.',
-    PARSER_ECODE
+    PROVIDER_ECODE
   )
 rescue HTTP::ConnectionError => e
   MyUtils.exit_on_exception(
     e, 'Provide a valid URL and ensure a stable internet connection.',
-    PARSER_ECODE
+    HTTP_ECODE
   )
 rescue ScraperError => e
   MyUtils.exit_on_exception(
-    e, "Please report this issue to the mantainer. Do not forget to provide the requested URL: #{options.url}",
-    PARSER_ECODE
+    e, "Please report this issue to the mantainer. Enable the verbose mode and send a copy of the log.\n\t#{MANTAINER}",
+    SCRAPER_ECODE
   )
 end
 MyUtils.note('All information was correctly retrieved from the internet')
+
+printer = PrinterFactory.new.build(options.printer)
+printer.print_changelog(provider.changelog)

@@ -10,7 +10,7 @@ class NoProviderHandlerError < NoProviderError; end
 class ScraperError < StandardError; end
 
 module Provider
-  attr_reader :valid
+  attr_reader :valid, :changelog
 
   def initialize(*)
     @supported = {}

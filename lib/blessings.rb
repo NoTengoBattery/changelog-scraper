@@ -1,66 +1,70 @@
 #!/usr/bin/env ruby
 
 module Blessings
+  def self.output_stream=(stream)
+    @output_stream = stream
+  end
+
   def self.insert_newline(lines)
     lines.times do
-      print("\n")
+      @output_stream.print("\n")
     end
   end
 
   def self.relative_move_to(horizontal, vertical)
     if horizontal.positive?
-      print("\e[#{horizontal}C")
+      @output_stream.print("\e[#{horizontal}C")
     elsif !horizontal.zero?
-      print("\e[#{horizontal.abs}D")
+      @output_stream.print("\e[#{horizontal.abs}D")
     end
     if vertical.positive?
-      print("\e[#{vertical}B")
+      @output_stream.print("\e[#{vertical}B")
     elsif !vertical.zero?
-      print("\e[#{vertical.abs}A")
+      @output_stream.print("\e[#{vertical.abs}A")
     end
   end
 
   def self.clear_line
-    print("\r\e[K")
+    @output_stream.print("\r\e[K")
   end
 
   def self.save
-    print("\e[s\u001B7")
+    @output_stream.print("\e[s\u001B7")
   end
 
   def self.restore
-    print("\e[u\u001B8")
+    @output_stream.print("\e[u\u001B8")
   end
 
   def self.red
-    print("\e[31m")
+    @output_stream.print("\e[31m")
   end
 
   def self.green
-    print("\e[32m")
+    @output_stream.print("\e[32m")
   end
 
   def self.yellow
-    print("\e[33m")
+    @output_stream.print("\e[33m")
   end
 
   def self.blue
-    print("\e[34m")
+    @output_stream.print("\e[34m")
   end
 
   def self.reset_color
-    print("\e[0m")
+    @output_stream.print("\e[0m")
   end
 
   def self.horizontal_bar(content, repetitions)
     repetitions.times do
-      print(content)
+      @output_stream.print(content)
     end
   end
 
   def self.vertical_bar(content, repetitions)
     repetitions.times do
-      print(content)
+      @output_stream.print(content)
       relative_move_to(-content.length, 1)
     end
     relative_move_to(content.length, -1)
@@ -68,7 +72,7 @@ module Blessings
 
   def self.relative_print_at(content, horizontal, vertical)
     relative_move_to(horizontal, vertical)
-    print(content)
+    @output_stream.print(content)
   end
 
   private_class_method def self.top_square_border(border, side_length)
