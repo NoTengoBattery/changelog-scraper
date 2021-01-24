@@ -4,15 +4,17 @@ require_relative 'git'
 
 class NoPrinterError < StandardError; end
 
+# This class does not need privated methods
 module Printer
   def initialize(*); end
 
   def supports?(keyword)
-    keyword == @keyword
+    MyUtils.pinfo("#{self.class} printer supports '#{keyword}'") if @keyword == keyword
+    @keyword == keyword
   end
 
   def print_changelog(*)
-    raise(NotImplementedError, "Please create a printer that inherits from #{Printer} and implement `print_changelog`")
+    raise(NotImplementedError, "Please create a printer that inherits from #{Printer}, and implement `print_changelog`")
   end
 end
 
