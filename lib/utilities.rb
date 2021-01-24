@@ -13,19 +13,13 @@ module MyUtils
 
   def self.perr(arg)
     Blessings.red
-    custom_p('ERROR: ', arg)
-    Blessings.reset_color
-  end
-
-  def self.pex(arg)
-    Blessings.red
-    custom_p("ERROR: #{arg.class} ~> ", arg)
+    custom_p("ERROR:\t", arg)
     Blessings.reset_color
   end
 
   def self.pwarn(arg)
     Blessings.yellow
-    custom_p('WARNING: ', arg)
+    custom_p("WARNING:\t", arg)
     Blessings.reset_color
   end
 
@@ -33,12 +27,12 @@ module MyUtils
     return unless @verbose
 
     Blessings.blue
-    custom_p('INFO: ', arg)
+    custom_p("INFO:\t", arg)
     Blessings.reset_color
   end
 
   def self.note(arg)
-    custom_p('NOTE: ', arg)
+    custom_p("NOTE:\t", arg)
   end
 
   def self.array_to_list(array)
@@ -46,7 +40,7 @@ module MyUtils
   end
 
   def self.exit_on_exception(exeption, message, code)
-    perr("#{exeption.class}: #{exeption}")
+    perr("#{exeption.class} ~>\t#{exeption}")
     perr(nil)
     perr(message)
     exit(code)

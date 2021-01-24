@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 
 PARSER_ECODE = 1
-HTTP_ECODE = 2
-PROVIDER_ECODE = 3
+PROVIDER_ECODE = 2
+HTTP_ECODE = 3
+SCRAPER_ECODE = 4
+MANTAINER = 'Oever González <notengobattery@gmail.com>'
 
-require 'bundler/inline'
+require 'bundler'
 Bundler.require(:default)

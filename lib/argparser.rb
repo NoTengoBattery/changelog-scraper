@@ -13,11 +13,14 @@ class GitHubLogManOptparser
   attr_reader :parser, :options
 
   class ScriptOptions
-    attr_reader :verbose, :url
+    attr_reader :verbose, :url, :printer
+
+    def initialize
+      @printer = 'interactive'
+    end
 
     def define_options(parser)
-      parser.banner = "\e[1m
-Usage: #{parser.program_name} [options] -u URL
+      parser.banner = "\e[1mUsage: #{parser.program_name} [options] -u URL
 Usage: #{parser.program_name} [options] --url URL\e[0m"
       parser.separator("Options can be 'long' when using the double minus or 'short' when using a single minus.")
       parser.separator('Except for the URL, all options are optional.')
@@ -27,6 +30,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
       parser.separator(nil)
       option_verbose(parser)
       option_uri(parser)
+      option_printer(parser)
       parser.on_tail('-h', '--help', 'Show this message') do
         puts(parser)
         exit
@@ -41,6 +45,12 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
 
     def option_uri(parser)
       parser.on('-u', '--url URL', URI, 'The URL where the changelog is hosted') { |value| @url = value }
+    end
+
+    def option_printer(parser)
+      parser.on('-p', '--printer PRINTER', String, 'Select the printer method') do |value|
+        @printer = value
+      end
     end
   end
 
