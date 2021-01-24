@@ -16,6 +16,12 @@ module Printer
   def print_changelog(*)
     raise(NotImplementedError, "Please create a printer that inherits from #{Printer}, and implement `print_changelog`")
   end
+
+  private
+
+  def validate_changelog(changelog)
+    raise(ArgumentError, "The #{Printer}'s first argument should be a #{Changelog}") unless changelog.is_a?(Changelog)
+  end
 end
 
 require_relative 'outputs'
@@ -24,7 +30,7 @@ require_relative 'outputs'
 class PrinterFactory
   def initialize
     @printers = []
-    @printers << Pipe
+    @printers << PipePrinter
   end
 
   def build(keyword)
