@@ -4,6 +4,8 @@ require_relative '../lib/argparser'
 require_relative '../lib/provider'
 require_relative '../lib/printer'
 
+Blessings.output_stream = $stderr
+
 begin
   options = GitHubLogManOptparser.new.parse(ARGV)
 rescue OptionParser::ParseError => e
