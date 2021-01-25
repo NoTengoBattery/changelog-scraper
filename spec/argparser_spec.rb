@@ -2,8 +2,8 @@
 
 require_relative '../lib/argparser'
 
-RSpec.describe 'GitHubLogManOptparser' do
-  let(:options_parser) { GitHubLogManOptparser.new }
+RSpec.describe 'ScriptOptparser' do
+  let(:options_parser) { ScriptOptparser.new }
   let(:minimal_args) { ['-u', 'http://example.com'] }
   let(:no_args) { [] }
   it 'turns on verbose mode using long option' do

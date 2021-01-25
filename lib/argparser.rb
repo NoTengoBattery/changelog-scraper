@@ -7,7 +7,7 @@ OptionParser.accept(URI) do |url|
   uri
 end
 
-class GitHubLogManOptparser
+class ScriptOptparser
   attr_reader :parser, :options
 
   class ScriptOptions

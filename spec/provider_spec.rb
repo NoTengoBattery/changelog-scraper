@@ -5,7 +5,7 @@ require_relative '../lib/provider'
 OPENWRT_GITHUB = 'https://github.com/openwrt'.freeze
 OPENWRT_GITHUB_PR = "#{OPENWRT_GITHUB}/openwrt/pull/1".freeze
 FAKE_GITHUB_PR = 'https://github.com/pull'.freeze
-EMPTY_MESSAGES = 'https://github.com/NoTengoBattery/GitHubLogMan/pull/1'.freeze
+EMPTY_MESSAGES = 'https://github.com/NoTengoBattery/changelog-scraper/pull/1'.freeze
 DELETED_BASE = "#{OPENWRT_GITHUB}/openwrt/pull/4".freeze
 
 RSpec.describe 'ProviderFactory' do

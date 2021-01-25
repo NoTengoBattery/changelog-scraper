@@ -8,7 +8,7 @@ Blessings.output_stream = $stderr
 MORE_HELP = 'For more information about the usage of this script, run it with the -h flag.'.freeze
 
 begin
-  options = GitHubLogManOptparser.new.parse(ARGV)
+  options = ScriptOptparser.new.parse(ARGV)
 rescue OptionParser::ParseError => e
   MyUtils.exit_on_exception(e, MORE_HELP, PARSER_ECODE)
 end
