@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-# - if you want to extend the functionality, add more providers here and don't forget to also add them to the factory -
-# - because of how `nokogiri` works, scrape methods may trigger Metric/AbcSize hint due to chained calls -
+# - implement new printers here, and send the class to the factory using `PrinterFactory.printers = [class]`
 
 class GitHubScraper
   include Scraper
@@ -15,7 +14,7 @@ class GitHubScraper
 
   private
 
-  def scrape_pull_request # rubocop:disable Metric/AbcSize, Metrics/MethodLength
+  def scrape_pull_request
     title = @dom.css('.gh-header-title span')
     branches = @dom.css('.commit-ref a')
     base = branches.last.attributes['title']
@@ -27,6 +26,9 @@ class GitHubScraper
     @changelog.status = @dom.css('.gh-header-meta span').first.text.strip
     @changelog.target_branch = branches.first.attributes['title'].value.strip
     @changelog.base_branch = base.value.strip unless base.nil?
+  end
+
+  def scrape_pull_commits
     @dom.css('.js-commit-group-commits .pr-1 code a.link-gray').each do |commit_html|
       commit = Commit.new
       url = URI.parse("#{@base_url}#{commit_html.attributes['href'].value}")
@@ -49,6 +51,7 @@ class GitHubScraper
     when MergeRequest
       @changelog.name = 'Pull Request'
       scrape_pull_request
+      scrape_pull_commits
     else
       scraped = false
     end

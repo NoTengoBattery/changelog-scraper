@@ -12,6 +12,7 @@ module Scraper
 
   def initialize(*)
     @supported = {}
+    @valid = false
   end
 
   def supports?(url)
@@ -27,6 +28,7 @@ module Scraper
         break
       end
     end
+    MyUtils.pinfo("#{self.class} scraper supports '#{url}'") if @valid
     @valid
   end
 
@@ -53,7 +55,7 @@ module Scraper
   end
 
   def scrape()
-    raise(NotImplementedError, "Please create a provider that inherits from #{Provider} and implement 'scrape()'")
+    raise(NotImplementedError, "Please create a scraper that inherits from #{Provider} and implement 'scrape()'")
   end
 
   def first_line(line)
@@ -74,7 +76,7 @@ module ProviderFactory
 
     def build(url)
       @scrapers.each do |scraper|
-        MyUtils.pinfo("Checking if scraper '#{scraper}' can handle the selected provider...")
+        MyUtils.pinfo("Checking if scraper '#{scraper}' can handle the provided URL...")
         scraper_built = scraper.new
         return scraper_built if scraper_built.supports?(url)
 

@@ -36,7 +36,7 @@ rescue HTTP::ConnectionError => e
   )
 rescue ScraperError => e
   MyUtils.exit_on_exception(
-    e, "Please report this issue to the mantainer. Enable the verbose mode and send a copy of the log.\n#{MORE_HELP}",
+    e, "Please report this issue to the maintainer. Enable the verbose mode and send a copy of the log.\n#{MORE_HELP}",
     SCRAPER_ECODE
   )
 end

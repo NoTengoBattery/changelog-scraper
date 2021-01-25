@@ -28,6 +28,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
       parser.separator("For the interactive printer, use the arrow keys and \e[4mEnter\e[0m or \e[4mSpace\e[0m.")
       parser.separator('For the Markdown printer, provide a valid Markdown file with the replacement mark.')
       parser.separator(nil)
+      parser.separator("Maintainer:\t#{MAINTAINER}")
       option_verbose(parser)
       option_uri(parser)
       option_printer(parser)

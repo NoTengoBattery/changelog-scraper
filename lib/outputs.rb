@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# - implement new printers here, and send the class to the factory using `PrinterFactory.printers = [class]`
+
 class PipePrinter
   include Printer
   def initialize
