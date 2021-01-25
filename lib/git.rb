@@ -4,7 +4,7 @@ class GitMessage
   attr_reader :time, :url
   attr_accessor :subject, :id, :message, :author, :name
 
-  def initialize(name = 'Message')
+  def initialize(name = 'git message')
     @name = name
   end
 
@@ -13,19 +13,12 @@ class GitMessage
   end
 
   def time=(time)
-    case time
-    when Time
-      @time = time
-    when String, Numeric
-      @time = Time.parse(time)
-    else
-      raise(ArgumentError, "Expected a #{Time} object, a convertible #{String}, or a #{Numeric} value")
-    end
+    @time = time.is_a?(Time) ? time : Time.parse(time)
   end
 end
 
 class Commit < GitMessage
-  def initialize(name = 'Commit')
+  def initialize(name = 'commit')
     super
   end
 end
@@ -33,7 +26,7 @@ end
 class Changelog < GitMessage
   attr_reader :commits
 
-  def initialize(name = 'Changelog')
+  def initialize(name = 'changelog')
     super
     @commits = []
   end
@@ -44,7 +37,7 @@ class Changelog < GitMessage
 end
 
 class MergeRequest < Changelog
-  def initialize(name = 'Merge Request')
+  def initialize(name = 'merge request')
     super
   end
   attr_accessor :status, :target_branch, :base_branch
