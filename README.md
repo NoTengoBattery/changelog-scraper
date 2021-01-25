@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
 # Capstone Project: Ruby: Changelog Scraper
-> A `git` changelog scraper can retrieve information from changelogs, such as merge requests from git websites.
+> A `git` changelog scraper can retrieve information from changelogs, such as merge requests, from git websites.
 
 ![screenshot](./doc/screenshot.png)
 
@@ -76,7 +76,7 @@ If you are running this program inside the live demo:
 - Click the green `Run` button centered at the top
 - Verify that the output shows no errors
 - Click the `Shell` tab in the right panel
-> The `Run` button will install any missing Gem and run a default demo command. The output of that command shows the *raw* result intended to be piped to other tools, not to be read by humans.
+> The `Run` button will install any missing Gem and run a default demo command.
 
 ### Running
 By following the steps in either the live demo or in the local environment, you should execute the program. There are three options.
