@@ -11,7 +11,7 @@ class ScriptOptparser
   attr_reader :parser, :options
 
   class ScriptOptions
-    attr_reader :verbose, :url, :printer
+    attr_reader :verbose, :quiet, :url, :printer
 
     def initialize
       @printer = 'pipe'
@@ -33,6 +33,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
       parser.separator("Maintainer: \e[1m#{MAINTAINER}\e[0m")
       parser.separator(nil)
       option_verbose(parser)
+      option_quiet(parser)
       option_uri(parser)
       option_printer(parser)
       parser.on_tail('-h', '--help', 'Show this help message and exit') do
@@ -44,7 +45,17 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
     private
 
     def option_verbose(parser)
-      parser.on('-v', '--[no-]verbose', 'Run this script with verbose output') { |value| @verbose = value }
+      parser.on('-v', '--[no-]verbose', 'Run this script with or without verbose output') do |value|
+        @verbose = value
+        @quiet = false
+      end
+    end
+
+    def option_quiet(parser)
+      parser.on('-q', '--[no-]quiet', 'Run this script with or without quiet output') do |value|
+        @quiet = value
+        @verbose = false
+      end
     end
 
     def option_uri(parser)

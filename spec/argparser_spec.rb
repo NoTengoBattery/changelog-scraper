@@ -10,16 +10,35 @@ RSpec.describe 'ScriptOptparser' do
     minimal_args << '--verbose'
     options = options_parser.parse(minimal_args)
     expect(options.verbose).to be_truthy
+    expect(options.quiet).to be_falsy
   end
   it 'turns on verbose mode using short option' do
     minimal_args << '-v'
     options = options_parser.parse(minimal_args)
     expect(options.verbose).to be_truthy
+    expect(options.quiet).to be_falsy
   end
   it 'turns off verbose mode' do
     minimal_args << '--no-verbose'
     options = options_parser.parse(minimal_args)
     expect(options.verbose).to be_falsy
+  end
+  it 'turns on quiet mode using long option' do
+    minimal_args << '--quiet'
+    options = options_parser.parse(minimal_args)
+    expect(options.quiet).to be_truthy
+    expect(options.verbose).to be_falsy
+  end
+  it 'turns on quiet mode using short option' do
+    minimal_args << '-q'
+    options = options_parser.parse(minimal_args)
+    expect(options.quiet).to be_truthy
+    expect(options.verbose).to be_falsy
+  end
+  it 'turns off quiet mode' do
+    minimal_args << '--no-quiet'
+    options = options_parser.parse(minimal_args)
+    expect(options.quiet).to be_falsy
   end
   it 'accepts a valid HTTP/HTTPS URL using long option' do
     no_args << '--url'

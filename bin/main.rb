@@ -13,6 +13,7 @@ rescue OptionParser::ParseError => e
   MyUtils.exit_on_exception(e, MORE_HELP, PARSER_ECODE)
 end
 MyUtils.verbose = options.verbose
+MyUtils.quiet = options.quiet
 
 MyUtils.note('The program has started. Please wait while the request is completed...')
 MyUtils.note(nil)

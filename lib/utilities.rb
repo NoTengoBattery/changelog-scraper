@@ -5,10 +5,15 @@ require_relative 'blessings'
 module MyUtils
   def self.initialize
     @verbose = false
+    @quiet = false
   end
 
   def self.verbose=(val)
     @verbose = val
+  end
+
+  def self.quiet=(val)
+    @quiet = val
   end
 
   def self.perr(arg)
@@ -24,7 +29,7 @@ module MyUtils
   end
 
   def self.pinfo(arg)
-    return unless @verbose
+    return if !@verbose or @quiet
 
     Blessings.blue
     custom_p("INFO:\t", arg)
@@ -32,6 +37,8 @@ module MyUtils
   end
 
   def self.note(arg)
+    return if @quiet
+
     custom_p("NOTE:\t", arg)
   end
 
