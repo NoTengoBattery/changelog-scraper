@@ -4,7 +4,6 @@ require_relative 'git'
 
 class NoPrinterError < StandardError; end
 
-# This class does not need privated methods
 module Printer
   def initialize(*); end
 
@@ -24,23 +23,28 @@ module Printer
   end
 end
 
-require_relative 'outputs'
+module PrinterFactory
+  @printers = []
+  class << self
+    attr_reader :printers
 
-# Add new printer here by pushing the class into the @printers array. Do not modify anything else.
-class PrinterFactory
-  def initialize
-    @printers = []
-    @printers << PipePrinter
-  end
+    def printers=(printer)
+      raise(ArgumentError, "The printer factory only accepts #{Printer} subclasses") unless printer < Printer
 
-  def build(keyword)
-    @printers.each do |printer|
-      MyUtils.pinfo("Checking if printer '#{printer}' can handle the selected printer...")
-      printer_built = printer.new
-      return printer_built if printer_built.supports?(keyword)
-
-      MyUtils.pinfo("Printer '#{printer}' can not handle the selected printer")
+      @printers << printer
     end
-    raise(NoPrinterError, "There is no #{Printer} that can handle '#{keyword}'")
+
+    def build(keyword)
+      @printers.each do |printer|
+        MyUtils.pinfo("Checking if printer '#{printer}' can handle the selected printer...")
+        printer_built = printer.new
+        return printer_built if printer_built.supports?(keyword)
+
+        MyUtils.pinfo("Printer '#{printer}' can not handle the selected printer")
+      end
+      raise(NoPrinterError, "There is no #{Printer} that can handle '#{keyword}'")
+    end
   end
 end
+
+require_relative 'outputs'
