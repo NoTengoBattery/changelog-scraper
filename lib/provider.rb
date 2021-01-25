@@ -8,7 +8,7 @@ class NoProviderError < StandardError; end
 class ScraperError < StandardError; end
 
 module Scraper
-  attr_reader :valid, :changelog
+  attr_reader :valid, :changelog, :host
 
   def initialize(*)
     @supported = {}
@@ -83,6 +83,12 @@ module ProviderFactory
         MyUtils.pinfo("Scraper '#{scraper}' can not handle the provided URL")
       end
       raise(NoProviderError, "There is no #{Scraper} that can handle '#{url}'")
+    end
+
+    def hosts()
+      @scrapers.reduce([]) do |accumulator, current|
+        accumulator << current.new.host
+      end
     end
   end
 end

@@ -5,6 +5,8 @@ require_relative 'git'
 class NoPrinterError < StandardError; end
 
 module Printer
+  attr_reader :keyword
+
   def initialize(*); end
 
   def supports?(keyword)
@@ -13,7 +15,8 @@ module Printer
   end
 
   def print_changelog(*)
-    raise(NotImplementedError, "Please create a printer that inherits from #{Printer}, and implement `print_changelog`")
+    raise(NotImplementedError,
+          "Please create a printer that inherits from #{Printer}, and implement `print_changelog`")
   end
 
   private
@@ -43,6 +46,12 @@ module PrinterFactory
         MyUtils.pinfo("Printer '#{printer}' can not handle the selected printer")
       end
       raise(NoPrinterError, "There is no #{Printer} that can handle '#{keyword}'")
+    end
+
+    def keywords()
+      @printers.reduce([]) do |accumulator, current|
+        accumulator << current.new.keyword
+      end
     end
   end
 end

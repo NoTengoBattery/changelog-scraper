@@ -4,6 +4,7 @@
 
 class PipePrinter
   include Printer
+
   def initialize
     super
     @keyword = 'pipe'

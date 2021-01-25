@@ -4,6 +4,7 @@
 
 class GitHubScraper
   include Scraper
+
   def initialize
     super
     @host = 'github.com'

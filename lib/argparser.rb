@@ -17,18 +17,21 @@ class GitHubLogManOptparser
       @printer = 'pipe'
     end
 
-    def define_options(parser)
+    def define_options(parser) # rubocop:disable Metrics/MethodLength
       parser.banner = "\e[1mUsage: #{parser.program_name} [options] -u URL
 Usage: #{parser.program_name} [options] --url URL\e[0m"
-      parser.separator("Options can be 'long' when using the double minus or 'short' when using a single minus.")
+      parser.separator("Options can be 'long' when using a double minus or 'short' when using a single minus.")
       parser.separator("Except for the URL, all options are optional. The default printer is '#{@printer}'.")
       parser.separator(nil)
       parser.separator("Use \e[4mControl+C\e[0m in the terminal to exit the interactive view.")
       parser.separator('For the pipe printer, use the shell redirection to pipe the output to other tools.')
-      parser.separator("For the interactive printer, use the arrow keys and \e[4mEnter\e[0m or \e[4mSpace\e[0m.")
       parser.separator('For the Markdown printer, provide a valid Markdown file with the replacement mark.')
       parser.separator(nil)
+      parser.separator("These printers are supported: \e[1m#{PrinterFactory.keywords.join("\e[0m, \e[1m")}\e[0m")
+      parser.separator("These hosts are supported: \e[1m#{ProviderFactory.hosts.join("\e[0m, \e[1m")}\e[0m")
+      parser.separator(nil)
       parser.separator("Maintainer:\t#{MAINTAINER}")
+      parser.separator(nil)
       option_verbose(parser)
       option_uri(parser)
       option_printer(parser)
@@ -49,7 +52,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
     end
 
     def option_printer(parser)
-      parser.on('-p', '--printer PRINTER', String, 'Select the printer method') do |value|
+      parser.on('-p', '--printer PRINTER', PrinterFactory.keywords, String, 'Select the printer method') do |value|
         @printer = value
       end
     end

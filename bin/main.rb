@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/argparser'
 require_relative '../lib/provider'
 require_relative '../lib/printer'
+require_relative '../lib/argparser'
 
 Blessings.output_stream = $stderr
 MORE_HELP = 'For more information about the usage of this script, run it with the -h flag.'.freeze
