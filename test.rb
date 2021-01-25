@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative 'environment'
-Bundler.require(:test)
+Bundler.require(:test, :development)
 
 config = RSpec::Core::ConfigurationOptions.new(
   ['--format', 'documentation',

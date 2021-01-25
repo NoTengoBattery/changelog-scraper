@@ -2,9 +2,7 @@
 
 OptionParser.accept(URI) do |url|
   uri = URI.parse(url) if url
-  unless uri.is_a?(URI::HTTP)
-    raise(OptionParser::InvalidArgument, 'Invalid URL provided, try providing a URL like https://github.com/...')
-  end
+  raise(OptionParser::InvalidArgument, '~> invalid URL, provide a valid HTTP/HTTPS URL') unless uri.class <= URI::HTTP
 
   uri
 end
@@ -16,22 +14,28 @@ class GitHubLogManOptparser
     attr_reader :verbose, :url, :printer
 
     def initialize
-      @printer = 'interactive'
+      @printer = 'pipe'
     end
 
-    def define_options(parser)
+    def define_options(parser) # rubocop:disable Metrics/MethodLength
       parser.banner = "\e[1mUsage: #{parser.program_name} [options] -u URL
 Usage: #{parser.program_name} [options] --url URL\e[0m"
-      parser.separator("Options can be 'long' when using the double minus or 'short' when using a single minus.")
-      parser.separator('Except for the URL, all options are optional.')
+      parser.separator("Options can be 'long' when using a double minus or 'short' when using a single minus.")
+      parser.separator("Except for the URL, all options are optional. The default printer is '#{@printer}'.")
       parser.separator(nil)
-      parser.separator("Use \e[4mControl+C\e[0m in the terminal to exit the full-screen view.")
-      parser.separator('Use the shell redirection to write out the text-plain view or pipe it to other tools.')
+      parser.separator("Use \e[4mControl+C\e[0m in the terminal to exit the interactive view.")
+      parser.separator('For the pipe printer, use the shell redirection to pipe the output to other tools.')
+      parser.separator('For the Markdown printer, provide a valid Markdown file with the replacement mark.')
+      parser.separator(nil)
+      parser.separator("These printers are supported: \e[1m#{PrinterFactory.keywords.join("\e[0m, \e[1m")}\e[0m")
+      parser.separator("These hosts are supported: \e[1m#{ProviderFactory.hosts.join("\e[0m, \e[1m")}\e[0m")
+      parser.separator(nil)
+      parser.separator("Maintainer: \e[1m#{MAINTAINER}\e[0m")
       parser.separator(nil)
       option_verbose(parser)
       option_uri(parser)
       option_printer(parser)
-      parser.on_tail('-h', '--help', 'Show this message') do
+      parser.on_tail('-h', '--help', 'Show this help message and exit') do
         puts(parser)
         exit
       end
@@ -48,7 +52,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
     end
 
     def option_printer(parser)
-      parser.on('-p', '--printer PRINTER', String, 'Select the printer method') do |value|
+      parser.on('-p', '--printer PRINTER', PrinterFactory.keywords, String, 'Select the printer method') do |value|
         @printer = value
       end
     end
@@ -59,7 +63,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
     @args = OptionParser.new do |parser|
       @options.define_options(parser)
       parser.parse!(args)
-      raise(OptionParser::MissingArgument, 'The URL parameter is required') if @options.url.nil?
+      raise(OptionParser::MissingArgument, '~> the URL parameter is required') if @options.url.nil?
     end
     @options
   end
