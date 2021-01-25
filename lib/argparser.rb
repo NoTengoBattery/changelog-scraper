@@ -30,7 +30,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
       parser.separator("These printers are supported: \e[1m#{PrinterFactory.keywords.join("\e[0m, \e[1m")}\e[0m")
       parser.separator("These hosts are supported: \e[1m#{ProviderFactory.hosts.join("\e[0m, \e[1m")}\e[0m")
       parser.separator(nil)
-      parser.separator("Maintainer:\t#{MAINTAINER}")
+      parser.separator("Maintainer: \e[1m#{MAINTAINER}\e[0m")
       parser.separator(nil)
       option_verbose(parser)
       option_uri(parser)
