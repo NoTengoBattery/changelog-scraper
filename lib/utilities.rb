@@ -40,7 +40,7 @@ module MyUtils
   end
 
   def self.exit_on_exception(exeption, message, code)
-    perr("#{exeption.class} ~>\t#{exeption}")
+    perr("#{exeption.class} ~> #{exeption}")
     perr(nil)
     perr(message)
     exit(code)
