@@ -29,7 +29,7 @@ module PrinterFactory
     attr_reader :printers
 
     def printers=(printer)
-      raise(ArgumentError, "The printer factory only accepts #{Printer} subclasses") unless printer < Printer
+      raise(ArgumentError, "The #{PrinterFactory} only accepts #{Printer} subclasses") unless printer < Printer
 
       @printers << printer
     end

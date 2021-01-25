@@ -4,7 +4,7 @@ require_relative 'utilities'
 
 module StrictHTTP
   include HTTP
-  def self.strict_get(url, tout = 10)
+  def self.strict_get(url, tout = 3)
     MyUtils.pinfo("Starting HTTP request to '#{url}' with timeout #{tout}...")
     http_response = HTTP.timeout(tout).follow.get(url)
     status = http_response.status.code

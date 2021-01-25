@@ -5,57 +5,34 @@ require_relative 'http'
 
 class NoProviderError < StandardError; end
 
-class NoProviderHandlerError < NoProviderError; end
-
 class ScraperError < StandardError; end
 
-module Provider
+module Scraper
   attr_reader :valid, :changelog
 
   def initialize(*)
     @supported = {}
   end
 
-  private
+  def supports?(url)
+    if url.host.include? @host
+      @supported.each do |keyword, type|
+        MyUtils.pinfo("#{@name}: Checking if changelog type '#{keyword}' supports this URL...")
+        next unless url.request_uri.include? keyword.to_s
 
-  def url_validator(url)
-    provider = self.class
-    if url.host == @host
-      @supported.each do |key, val|
-        MyUtils.pinfo("#{provider}: Checking if changelog type '#{key}' supports this URL...")
-        next unless url.request_uri.include? key.to_s
-
-        MyUtils.pinfo("#{provider}: Changelog type '#{key}' supports this URL")
+        MyUtils.pinfo("#{@name}: Changelog type '#{keyword}' supports this URL")
         @valid = true
         @req_url = url
-        @changelog_type = val
+        @changelog_type = type
         break
       end
-      raise(NoProviderHandlerError, "The URL is a malformed #{@name} webpage and can not be handled") unless @valid
     end
     @valid
   end
 
-  def get_html(url)
-    MyUtils.pinfo('Downloading the webpage...')
-    @dom = Nokogiri::HTML(StrictHTTP.strict_get(url).to_s)
-    MyUtils.pinfo('Webpage downloaded successfully')
-  end
-
-  def scrape()
-    raise(NotImplementedError, "Please create a provider that inherits from #{Provider} and implement `scrape`")
-  end
-
-  def first_line(line)
-    line.strip.split("\n").first
-  end
-
-  def build_provider(url)
-    url_validator(url)
-    return unless @valid
-
-    get_html(url) if @valid
-    MyUtils.pinfo("Scraping a #{@name} #{@changelog_type.name}...") if @valid
+  def build_from(url)
+    grab_html(url) if @valid
+    MyUtils.pinfo("Scraping a #{@name} #{@changelog_type}...") if @valid
     begin
       scraped = scrape if @valid
     rescue StandardError
@@ -66,25 +43,46 @@ module Provider
     MyUtils.pinfo("#{@name}: Scraping succeeded")
     @dom = nil
   end
+
+  private
+
+  def grab_html(url)
+    MyUtils.pinfo("#{@name}: Downloading the webpage...")
+    @dom = Nokogiri::HTML(StrictHTTP.strict_get(url, HTTP_TIMEOUT_SECONDS).to_s)
+    MyUtils.pinfo("#{@name}: Webpage downloaded successfully")
+  end
+
+  def scrape()
+    raise(NotImplementedError, "Please create a provider that inherits from #{Provider} and implement 'scrape()'")
+  end
+
+  def first_line(line)
+    line.strip.split("\n").first
+  end
+end
+
+module ProviderFactory
+  @scrapers = []
+  class << self
+    attr_reader :scrapers
+
+    def scrapers=(scraper)
+      raise(ArgumentError, "The #{ProviderFactory} only accepts #{Scraper} subclasses") unless scraper < Scraper
+
+      @scrapers << scraper
+    end
+
+    def build(url)
+      @scrapers.each do |scraper|
+        MyUtils.pinfo("Checking if scraper '#{scraper}' can handle the selected provider...")
+        scraper_built = scraper.new
+        return scraper_built if scraper_built.supports?(url)
+
+        MyUtils.pinfo("Scraper '#{scraper}' can not handle the provided URL")
+      end
+      raise(NoProviderError, "There is no #{Scraper} that can handle '#{url}'")
+    end
+  end
 end
 
 require_relative 'scrapers'
-
-# Add new providers here by pushing the class into the @providers array. Do not modify anything else.
-class ProviderFactory
-  def initialize
-    @providers = []
-    @providers << GitHubScraper
-  end
-
-  def build(url)
-    @providers.each do |provider|
-      MyUtils.pinfo("Checking if provider '#{provider}' can handle the URL...")
-      provider_built = provider.new(url)
-      return(provider_built) if provider_built.valid and provider_built.is_a?(Provider)
-
-      MyUtils.pinfo("Provider '#{provider}' can not handle the URL")
-    end
-    raise(NoProviderError, 'The given URL is not supported by any provider')
-  end
-end

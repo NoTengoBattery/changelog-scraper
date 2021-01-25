@@ -5,7 +5,7 @@ require_relative '../lib/provider'
 require_relative '../lib/printer'
 
 Blessings.output_stream = $stderr
-MORE_HELP = 'For more information about the usage of this script, run it with the -h flag.'
+MORE_HELP = 'For more information about the usage of this script, run it with the -h flag.'.freeze
 
 begin
   options = GitHubLogManOptparser.new.parse(ARGV)
@@ -22,7 +22,8 @@ MyUtils.note('The script may fail due to excessive request to the provider, be c
 MyUtils.note(nil)
 MyUtils.note(MORE_HELP)
 begin
-  provider = ProviderFactory.new.build(options.url)
+  scraper = ProviderFactory.build(options.url)
+  scraper.build_from(options.url)
 rescue NoProviderError => e
   MyUtils.exit_on_exception(
     e, "Run this scirpt with the verbose option to see all the available providers.\n#{MORE_HELP}",
@@ -42,4 +43,4 @@ end
 MyUtils.note('All information was correctly retrieved from the internet')
 
 printer = PrinterFactory.build(options.printer)
-printer.print_changelog(provider.changelog)
+printer.print_changelog(scraper.changelog)

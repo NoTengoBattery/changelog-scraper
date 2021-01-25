@@ -4,14 +4,13 @@
 # - because of how `nokogiri` works, scrape methods may trigger Metric/AbcSize hint due to chained calls -
 
 class GitHubScraper
-  include Provider
-  def initialize(url)
+  include Scraper
+  def initialize
     super
     @host = 'github.com'
     @base_url = 'https://github.com'
     @name = 'GitHub'
     @supported[:pull] = MergeRequest
-    build_provider(url)
   end
 
   private
@@ -31,7 +30,7 @@ class GitHubScraper
     @dom.css('.js-commit-group-commits .pr-1 code a.link-gray').each do |commit_html|
       commit = Commit.new
       url = URI.parse("#{@base_url}#{commit_html.attributes['href'].value}")
-      commit_dom = Nokogiri::HTML(StrictHTTP.strict_get(url).to_s)
+      commit_dom = Nokogiri::HTML(StrictHTTP.strict_get(url, HTTP_TIMEOUT_SECONDS).to_s)
       commit.subject = commit_dom.css('.commit-title').first.children.text.strip
       commit.id = commit_dom.css('.sha').first.children.text.strip
       commit.time = commit_dom.css('relative-time').last.attributes['datetime'].value
@@ -56,3 +55,4 @@ class GitHubScraper
     scraped
   end
 end
+ProviderFactory.scrapers = GitHubScraper
