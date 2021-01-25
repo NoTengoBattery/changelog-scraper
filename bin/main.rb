@@ -15,8 +15,8 @@ end
 MyUtils.verbose = options.verbose
 MyUtils.quiet = options.quiet
 
-MyUtils.note('The program has started. Please wait while the request is completed...')
-MyUtils.note(nil)
+MyUtils.pwarn('The program has started. Please wait while the request is completed...')
+MyUtils.pwarn(nil)
 MyUtils.note('This process may take a while, specially for large changelogs.')
 MyUtils.note('Enable the verbose mode to see the proccess as it runs.')
 MyUtils.note('The script may fail due to excessive request to the provider, be careful to not hit the limit.')
