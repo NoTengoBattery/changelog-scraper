@@ -43,7 +43,9 @@ Currently, the project is production-ready. The high-quality, readable, and modu
 [![Run on Repl.it](https://repl.it/badge/github/NoTengoBattery/changelog-scraper)](https://repl.it/@NoTengoBattery/changelog-scraper#README.md)
 
 ## Documentation
-A [manpage](https://wiki.archlinux.org/index.php/Man_page)-like Markdown document is available [here](./doc/README.md).
+A [manpage](https://wiki.archlinux.org/index.php/Man_page)-like Markdown document is available [here](./doc/README.md). This documentation only covers the production version.
+
+> If you are on *repl.it*, please click [here](#doc/README.md).
 
 
 ## Getting Started
