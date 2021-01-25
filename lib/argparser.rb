@@ -2,7 +2,7 @@
 
 OptionParser.accept(URI) do |url|
   uri = URI.parse(url) if url
-  raise(OptionParser::InvalidArgument, '~> invalid URL, provide a valid HTTP/HTTPS URL') unless uri.class < URI::HTTP
+  raise(OptionParser::InvalidArgument, '~> invalid URL, provide a valid HTTP/HTTPS URL') unless uri.class <= URI::HTTP
 
   uri
 end
