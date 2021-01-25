@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
 # Capstone Project: Ruby: Changelog Scraper
-> A `git` changelog scraper can retrieve information from changelogs, such as merge requests, from git websites.
+> A `git` changelog scraper that can retrieve information from changelogs, such as merge/pull requests, from git websites such as GitHub.
 
 ![screenshot](./doc/screenshot.png)
 
@@ -55,6 +55,7 @@ You have two options for using this program: running it locally or running it fr
 For running this program locally, you need to:
 - [Install Ruby](https://www.ruby-lang.org/en/downloads/)
 - [Install git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
 > Note: as discussed below, downloading the source code without `git` is possible.
 
 Once Ruby is installed, get a copy of this project by:
@@ -64,11 +65,13 @@ Once Ruby is installed, get a copy of this project by:
   * Click [here](https://github.com/NoTengoBattery/changelog-scraper/archive/master.zip) to download a copy of the stable branch
   * Click [here](https://github.com/NoTengoBattery/changelog-scraper/archive/develop.zip) to download a copy of the development branch
   * Once  downloaded, extract it in a place with easy access to a terminal
+
 > This project does not need to be compiled. It only needs the Ruby interpreter.
 
 Once Ruby is installed, and you have a copy of the source code, open the terminal and navigate to the folder where the code is:
 - For Windows users, check [this](https://www.technoloxy.com/tutorials/cmd-navigate-view-run/) article.
 - For UNIX/UNIX-like users such as Linux and macOS users, check [this](https://swcarpentry.github.io/shell-novice/02-filedir/index.html) article.
+
 > Information about executing files is available inside the articles.
 
 Install the Gems by running `bundle install`. You may need to provide your user password. For more information about Ruby's `bundle`, check [here](https://bundler.io/man/bundle-install.1.html).
@@ -78,6 +81,7 @@ If you are running this program inside the live demo:
 - Click the green `Run` button centered at the top
 - Verify that the output shows no errors
 - Click the `Shell` tab in the right panel
+
 > The `Run` button will install any missing Gem and run a default demo command.
 
 ### Running
@@ -92,7 +96,7 @@ In the following commands, replace `[url]` with the actual URL to test. You may 
 
 ### Demos
 #### Piping the output to `awk` to format the output:
-```sh
+```shell
 changelog-scraper -u https://github.com/NoTengoBattery/changelog-scraper/pull/1 -q | awk -F'\\x1d' '{printf "#%3d:\t%s\n", $2 + 1, $3}'
 ```
 

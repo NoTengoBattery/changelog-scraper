@@ -4,8 +4,10 @@
 `changelog-scraper` - a HTML scraper that prints changelogs from [`git(1)`](https://linux.die.net/man/1/git) websites
 
 ## SYNOPSIS
-`changelog-scraper -u URL [options]`<br>
-`changelog-scraper --url URL [options]`
+```shell
+changelog-scraper -u URL [options]
+changelog-scraper --url URL [options]
+```
 
 ## DESCRIPTION
 `changelog-scraper` is a web scraper that takes a URL and a set of options and prints a changelog of [`git(1)`](https://linux.die.net/man/1/git) commits into the terminal. It supports different outputs and service providers, such as GitHub.
@@ -38,7 +40,7 @@ The `pipe` output is separated by invisible [`ascii(7)`](https://linux.die.net/m
 Most terminals do not print the invisible control characters, some of them may print these characters as their hexadecimal code. If that is the case, the output may look like this: `\x1d0\x1dCommit subject\x1d\n`.
 
 This character is intended to be a field separator for tools like [`awk(1)`](https://linux.die.net/man/1/awk). Take this small one-liner as an example:
-```sh
+```shell
 changelog-scraper -u [url] -q | awk -F'\\x1d' '{printf "#%3d:\t%s\n", $2 + 1, $3}'
 ```
 
