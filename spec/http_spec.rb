@@ -13,8 +13,8 @@ RSpec.describe 'StrictHTTP' do
   it 'rejects valid URLs that lead to DNS NXDOMAIN' do
     expect { StrictHTTP.strict_get(valid_but_nx, 3) }.to raise_error(HTTP::ConnectionError)
   end
-  it 'rejects valid URLs that lead to timeout' do
-    expect { StrictHTTP.strict_get(timeout, 3) }.to raise_error(HTTP::TimeoutError)
+  it 'rejects valid URLs that lead to server errors' do
+    expect { StrictHTTP.strict_get(timeout, 3) }.to raise_error(HTTP::ConnectionError)
   end
   it 'accepts valid HTTP URLs that return HTTP success codes' do
     expect { StrictHTTP.strict_get(good, 3) }.not_to raise_error
