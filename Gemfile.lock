@@ -11,6 +11,7 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     ffi (1.14.2)
+    ffi (1.14.2-x64-mingw32)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -28,6 +29,8 @@ GEM
     mini_portile2 (2.5.0)
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
+    nokogiri (1.11.1-x64-mingw32)
       racc (~> 1.4)
     optparse (0.1.0)
     parallel (1.20.1)
@@ -74,11 +77,13 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.7)
+    unf_ext (0.0.7.7-x64-mingw32)
     unicode-display_width (2.0.0)
     uri (0.10.1)
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   curses
