@@ -42,10 +42,6 @@ module MyUtils
     custom_p("NOTE:\t", arg)
   end
 
-  def self.array_to_list(array)
-    array.reduce { |c, v| "#{c}, #{v}" }
-  end
-
   def self.exit_on_exception(exeption, message, code)
     perr("#{exeption.class} ~> #{exeption}")
     perr(nil)

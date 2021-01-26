@@ -29,8 +29,7 @@ The `interactive` printer is implemented in [`curses(3)`](https://linux.die.net/
 |KEY|DESCRIPTION|
 |-|-|
 |`[ARROW]`|Use the up arrow and down arrow to move through the list of commits in the main menu. Use it to scroll through the commit message inside the commit detail view.|
-|`SPACE` or `ENTER`|When inside the list of commits, use them to enter the commit detail view. When inside the window control options, use them to select the desired action.|
-|`ESC`|This key will exit the commit detail view or close the interactive window when pressed in the main menu|
+|`ESC`|This key will exit the commit detail view or close the interactive window when pressed twice in the main menu|
 
 ## PIPE FORMATTER
 The pipe formatter is a characteristic of the `pipe` printer that allows users to pipe the output to text processing tools, such as [`awk(1)`](https://linux.die.net/man/1/awk), [`sed(1)`](https://linux.die.net/man/1/sed) or [`perl(1)`](https://linux.die.net/man/1/perl) scripts or one-liners.

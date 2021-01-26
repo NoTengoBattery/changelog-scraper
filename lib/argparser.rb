@@ -63,7 +63,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
     end
 
     def option_printer(parser)
-      parser.on('-p', '--printer PRINTER', PrinterFactory.keywords, String, 'Select the printer method') do |value|
+      parser.on('-p', '--printer PRINTER', String, PrinterFactory.keywords, 'Select the printer method') do |value|
         @printer = value
       end
     end

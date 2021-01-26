@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/http'
+require_relative '../lib/strict_http'
 
 RSpec.describe 'StrictHTTP' do
   let(:valid_but_error) { 'https://google.com/notfound' }

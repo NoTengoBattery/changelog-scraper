@@ -16,4 +16,4 @@ jobs:
           bundle update --bundler
           [ -f Gemfile ] && bundle
       - name: RSpec Report
-        run: bundle exec ruby test.rb
+        run: bundle exec rspec --force-color --format documentation
