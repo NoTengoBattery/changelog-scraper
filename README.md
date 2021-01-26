@@ -71,10 +71,15 @@ In the following commands, replace `[url]` with the actual URL to test. You may 
 ### Demos
 #### Piping the output to `awk` to format the output:
 ```shell
-changelog-scraper -u https://github.com/NoTengoBattery/changelog-scraper/pull/1 -q | awk -F'\\x1d' '{printf "#%3d:\t%s\n", $2 + 1, $3}'
+changelog-scraper -p pipe -q -u https://github.com/NoTengoBattery/changelog-scraper/pull/1 | awk -F'\\x1d' '{printf "#%3d:\t%s\n", $2 + 1, $3}'
 ```
 **[!] REMEBER**: the pipe output is not designed to be read by humans, that's why an `awk` script is needed to format the output.
 > **Warning**: `awk` is not available in Windows, and is not included in the native installed for Ruby. It is available on WSL and MinGW.
+
+#### Showing the interactive view
+```shell
+changelog-scraper -u https://github.com/NoTengoBattery/changelog-scraper/pull/1
+```
 
 For more information about the usage, refer to the manual page.
 
