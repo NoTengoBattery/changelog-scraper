@@ -3,6 +3,7 @@
 require_relative '../lib/printer'
 
 PIPE = 'pipe'.freeze
+INTERACTIVE = 'interactive'.freeze
 NOT_IMPLEMENTED = 'not-implemented'.freeze
 
 RSpec.describe 'PrinterFactory' do
@@ -10,6 +11,9 @@ RSpec.describe 'PrinterFactory' do
   describe 'PipeFactory' do
     it 'returns a Pipe printer when the \'pipe\' keyword is given' do
       expect(factory.build(PIPE)).to be_a(PipePrinter)
+    end
+    it 'returns a Curses printer when the \'interactive\' keyword is given' do
+      expect(factory.build(INTERACTIVE)).to be_a(InteractivePrinter)
     end
     it 'throws an error when an invalid keyword is given' do
       expect { factory.build(NOT_IMPLEMENTED) }.to raise_error(NoPrinterError)

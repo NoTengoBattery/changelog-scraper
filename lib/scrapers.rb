@@ -31,6 +31,7 @@ class GitHubScraper
 
   def scrape_pull_commits
     @dom.css('.js-commit-group-commits .pr-1 code a.link-gray').each do |commit_html|
+      sleep(1) # sleep 1 second to rate-limit the request to 60/minute
       commit = Commit.new
       url = URI.parse("#{@base_url}#{commit_html.attributes['href'].value}")
       commit_dom = Nokogiri::HTML(StrictHTTP.strict_get(url, HTTP_TIMEOUT_SECONDS).to_s)
@@ -38,7 +39,7 @@ class GitHubScraper
       commit.id = commit_dom.css('.sha').first.children.text.strip
       commit.time = commit_dom.css('relative-time').last.attributes['datetime'].value
       message = commit_dom.css('.commit-desc pre')
-      commit.message = message.first.children.text.strip unless message
+      commit.message = message.first.children.text.strip unless message.empty?
       commit.author = commit_dom.css('.commit-author').first.children.text.strip
       commit.url = url
       @changelog.commits = commit

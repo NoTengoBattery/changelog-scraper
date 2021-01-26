@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative 'git'
-require_relative 'http'
+require_relative 'strict_http'
 
 class NoProviderError < StandardError; end
 
