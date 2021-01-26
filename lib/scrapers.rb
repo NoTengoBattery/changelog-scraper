@@ -10,7 +10,7 @@ class GitHubScraper
     @host = 'github.com'
     @base_url = 'https://github.com'
     @name = 'GitHub'
-    @supported[:pull] = MergeRequest
+    @supported[%r{pull/\d+/?$}] = MergeRequest
   end
 
   private
@@ -29,11 +29,12 @@ class GitHubScraper
     @changelog.base_branch = base.value.strip unless base.nil?
   end
 
-  def scrape_pull_commits
-    @dom.css('.js-commit-group-commits .pr-1 code a.link-gray').each do |commit_html|
-      sleep(1) # sleep 1 second to rate-limit the request to 60/minute
+  def scrape_pull_commits # rubocop:disable Metrics/AbcSize
+    url = URI.parse("#{@changelog.url}/commits")
+    commits = Nokogiri::HTML(StrictHTTP.strict_get(url, HTTP_TIMEOUT_SECONDS).to_s)
+    commits.css('.js-commits-list-item div a.text-bold').each do |commit_html|
       commit = Commit.new
-      url = URI.parse("#{@base_url}#{commit_html.attributes['href'].value}")
+      url = URI.parse("#{@base_url}#{commit_html.attributes['href'].value}".gsub(%r{pull/\d+/?/commits}, 'commit'))
       commit_dom = Nokogiri::HTML(StrictHTTP.strict_get(url, HTTP_TIMEOUT_SECONDS).to_s)
       commit.subject = commit_dom.css('.commit-title').first.children.text.strip
       commit.id = commit_dom.css('.sha').first.children.text.strip
