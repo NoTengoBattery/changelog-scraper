@@ -47,10 +47,10 @@ RSpec.describe 'Provider' do
       expect(github_scraper.valid).to be_truthy
     end
     it 'rejects a GitHub page that is not supported' do
-      expect { github_scraper.build_from(github_invalid) }.to raise_error(ScraperError)
+      expect { github_scraper.build_from(github_invalid) }.to raise_error(NotImplementedError)
     end
     it 'rejects a GitHub page that is a fake pull request' do
-      expect { github_scraper.build_from(fake) }.to raise_error(ScraperError)
+      expect { github_scraper.build_from(fake) }.to raise_error(NotImplementedError)
     end
   end
 end

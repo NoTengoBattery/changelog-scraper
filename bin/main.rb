@@ -46,7 +46,7 @@ MyUtils.note('All information was correctly retrieved from the internet')
 begin
   printer = PrinterFactory.build(options.printer)
   printer.print_changelog(scraper.changelog)
-rescue Curses::BadArgumentError
+rescue Curses::BadArgumentError, RuntimeError
   MyUtils.exit_on_exception(
     e, "The interactive window can not be smaller than certain height. Use a bigger terminal window.\n#{MORE_HELP}",
     SCRAPER_ECODE

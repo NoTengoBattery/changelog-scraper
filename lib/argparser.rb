@@ -14,7 +14,7 @@ class ScriptOptparser
     attr_reader :verbose, :quiet, :url, :printer
 
     def initialize
-      @printer = 'pipe'
+      @printer = 'interactive'
     end
 
     def define_options(parser) # rubocop:disable Metrics/MethodLength
@@ -23,7 +23,7 @@ Usage: #{parser.program_name} [options] --url URL\e[0m"
       parser.separator("Options can be 'long' when using a double minus or 'short' when using a single minus.")
       parser.separator("Except for the URL, all options are optional. The default printer is '#{@printer}'.")
       parser.separator(nil)
-      parser.separator("Use \e[4mControl+C\e[0m in the terminal to exit the interactive view.")
+      parser.separator("Use \e[4mControl+C\e[0m or \e[4mESC ESC\e[0m in the terminal to exit the interactive view.")
       parser.separator('For the pipe printer, use the shell redirection to pipe the output to other tools.')
       parser.separator('For the Markdown printer, provide a valid Markdown file with the replacement mark.')
       parser.separator(nil)

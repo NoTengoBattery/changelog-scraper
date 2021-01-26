@@ -1,4 +1,4 @@
-run="./changelog-scraper -q -p i -u https://github.com/NoTengoBattery/changelog-scraper/pull/1"
+run="./changelog-scraper -q -p i -u https://github.com/NoTengoBattery/changelog-scraper/pull/10"
 language="ruby"
 
 [packager]

@@ -18,10 +18,10 @@ module Scraper
   def supports?(url)
     if url.host.include? @host
       @supported.each do |expression, type|
-        MyUtils.pinfo("#{@name}: Checking if changelog expression '#{expression}' supports this URL...")
+        MyUtils.pinfo("#{@name}: Checking if changelog pattern '#{expression}' supports this URL...")
         next unless expression.match?(url.request_uri)
 
-        MyUtils.pinfo("#{@name}: Changelog expression '#{expression}' supports this URL")
+        MyUtils.pinfo("#{@name}: Changelog pattern '#{expression}' supports this URL")
         @valid = true
         @req_url = url
         @changelog_type = type

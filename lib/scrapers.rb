@@ -33,8 +33,10 @@ class GitHubScraper
     url = URI.parse("#{@changelog.url}/commits")
     commits = Nokogiri::HTML(StrictHTTP.strict_get(url, HTTP_TIMEOUT_SECONDS).to_s)
     commits.css('.js-commits-list-item div a.text-bold').each do |commit_html|
+      sleep(0.65) # rate-limit to around 90req/sec
       commit = Commit.new
-      url = URI.parse("#{@base_url}#{commit_html.attributes['href'].value}".gsub(%r{pull/\d+/?/commits}, 'commit'))
+      url = URI.parse("#{@base_url}#{commit_html.attributes['href'].value}"
+        .gsub(%r{pull/\d+/?/commits}, 'commit'))
       commit_dom = Nokogiri::HTML(StrictHTTP.strict_get(url, HTTP_TIMEOUT_SECONDS).to_s)
       commit.subject = commit_dom.css('.commit-title').first.children.text.strip
       commit.id = commit_dom.css('.sha').first.children.text.strip
