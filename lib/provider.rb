@@ -18,10 +18,10 @@ module Scraper
   def supports?(url)
     if url.host.include? @host
       @supported.each do |expression, type|
-        MyUtils.pinfo("#{@name}: Checking if changelog pattern '#{expression}' supports this URL...")
+        MyUtils.pinfo("#{@name}: Checking if changelog pattern '#{expression}' matches this URL...")
         next unless expression.match?(url.request_uri)
 
-        MyUtils.pinfo("#{@name}: Changelog pattern '#{expression}' supports this URL")
+        MyUtils.pinfo("#{@name}: Changelog pattern '#{expression}' matches this URL")
         @valid = true
         @req_url = url
         @changelog_type = type
@@ -38,7 +38,7 @@ module Scraper
     begin
       scraped = scrape if @valid
     rescue StandardError
-      raise(NotImplementedError, 'Scraping failed, this may be due to a malformed URL or outdated scraper')
+      raise(ScraperError, 'Scraping failed, this may be due to a malformed URL or outdated scraper')
     end
     raise(ScraperError, 'The scraper rejected the provided URL') unless scraped
 

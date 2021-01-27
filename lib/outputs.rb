@@ -86,7 +86,7 @@ class InteractivePrinter # rubocop:disable Metrics/ClassLength
   def build_heading
     commits_nr = @changelog.commits.length
     reset_window(@window, @h_w1, @w_w1, 2, 2)
-    @window.addstr('Subject: ')
+    @window.addstr("URL: #{@changelog.url}\nSubject: ")
     @window.attron(Curses::A_BOLD | Curses::A_UNDERLINE)
     @window.addstr("#{@changelog.subject}\n")
     @window.attroff(Curses::A_BOLD | Curses::A_UNDERLINE)
@@ -159,18 +159,18 @@ class InteractivePrinter # rubocop:disable Metrics/ClassLength
     nro = @menu_items.index(@menu.current_item) + 1
     total = @menu_items.length
     reset_window(@right_panel, @h_p1, @w_p1, 2, 2)
-    @right_panel.addstr("Hash: #{commit.id} \n From: ")
+    @right_panel.addstr("URL: #{commit.url}\nHash: #{commit.id}\nFrom: ")
     @right_panel.attron(Curses::A_UNDERLINE)
     @right_panel.addstr(commit.author)
     @right_panel.attroff(Curses::A_UNDERLINE)
-    @right_panel.addstr("\n Date: ")
+    @right_panel.addstr("\nDate: ")
     @right_panel.attron(Curses::A_BOLD)
     @right_panel.addstr(commit.time.to_s)
     @right_panel.attroff(Curses::A_BOLD)
     @right_panel.addstr("\nSubject [#{nro}/#{total}]: ")
-    @right_panel.attron(Curses::A_BOLD | Curses::A_UNDERLINE)
+    @right_panel.attron(Curses::A_STANDOUT)
     @right_panel.addstr(commit.subject)
-    @right_panel.attroff(Curses::A_BOLD | Curses::A_UNDERLINE)
+    @right_panel.attroff(Curses::A_STANDOUT)
     @right_panel.addstr("\n\n")
     @right_panel.addstr(commit.message)
   end
