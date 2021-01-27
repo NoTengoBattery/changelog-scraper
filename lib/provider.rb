@@ -37,7 +37,8 @@ module Scraper
     MyUtils.pinfo("Scraping a #{@name} #{@changelog_type}...") if @valid
     begin
       scraped = scrape if @valid
-    rescue StandardError
+    rescue StandardError => e
+      MyUtils.perr(e.backtrace.join("\n\t"))
       raise(ScraperError, 'Scraping failed, this may be due to a malformed URL or outdated scraper')
     end
     raise(ScraperError, 'The scraper rejected the provided URL') unless scraped
