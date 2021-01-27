@@ -11,4 +11,3 @@ DEPENDENCIES
   rspec
   rubocop
   time
-  uri
