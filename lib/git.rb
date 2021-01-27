@@ -39,7 +39,6 @@ end
 class MergeRequest < Changelog
   def initialize(name = 'merge request')
     super
-    @base_branch = '[unavailable branch]'
   end
   attr_accessor :status, :target_branch, :base_branch
 end

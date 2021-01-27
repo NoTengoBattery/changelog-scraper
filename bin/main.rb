@@ -36,6 +36,7 @@ rescue HTTP::ConnectionError => e
     HTTP_ECODE
   )
 rescue ScraperError => e
+  e.backtrace
   MyUtils.exit_on_exception(
     e, "Please report this issue to the maintainer. Enable the verbose mode and send a copy of the log.\n#{MORE_HELP}",
     SCRAPER_ECODE
@@ -48,7 +49,7 @@ begin
   printer.print_changelog(scraper.changelog)
 rescue Curses::BadArgumentError, RuntimeError
   MyUtils.exit_on_exception(
-    e, "The interactive window can not be smaller than certain height. Use a bigger terminal window.\n#{MORE_HELP}",
+    e, "The interactive window can not be smaller than certain dimentions. Use a bigger terminal window.\n#{MORE_HELP}",
     SCRAPER_ECODE
   )
 end

@@ -59,26 +59,31 @@ If you are running this program inside the live demo:
 ### Running
 By following the steps in either the live demo or in the local environment, you should execute the program. There are three options.
 
-For all of the three, you need a valid URL. If you don't know what URL to use, try this one: `https://github.com/NoTengoBattery/changelog-scraper/pull/1`.
+For all of the three, you need a valid URL. If you don't know what URL to use, try this one: `https://github.com/NoTengoBattery/changelog-scraper/pull/10`.
 
 In the following commands, replace `[url]` with the actual URL to test. You may need to add a `./` in front of the executable file name. Please refer to the articles about navigating the file system in the terminal.
-- Run the production version by running `changelog-scraper -v -u [url]`, `./changelog-scraper -v -u [url]` or `bundle exec changelog-scraper -v -u [url]`
+- Run the production version by running `changelog-scraper -u [url]`, `./changelog-scraper -u [url]` or `bundle exec changelog-scraper -u [url]`
 - Run the development version by running `develop.rb -u [url]`, `./develop.rb -u [url]` or `bundle exec develop.rb -u [url]`
 - Run the tests by running `bundle exec rspec`
 
 > **Warning**: for Windows users using the native Ruby installer, the interactive view may not work because of Windows' poor support for `curses`. However, if you are using WSL or MinGW it will work flawlessly. For WSL and native Ubuntu, please make sure that you have the following packages: `build-essentials git libncurses-dev libncursesw5-dev ruby ruby-bundler ruby-dev`.
 
 ### Demos
-#### Piping the output to `awk` to format the output:
+#### Piping the output to `awk` to format the output (with index):
 ```shell
-changelog-scraper -p pipe -q -u https://github.com/NoTengoBattery/changelog-scraper/pull/1 | awk -F'\\x1d' '{printf "#%3d:\t%s\n", $2 + 1, $3}'
+changelog-scraper -p pipe -q -u https://github.com/NoTengoBattery/changelog-scraper/pull/10 | awk -F'\\x1d' '{printf "#%3d:\t%s\n", $2 + 1, $3}'
 ```
+#### Piping the output to `awk` to format the output (as a bullet list):
+```shell
+changelog-scraper -p pipe -q -u https://github.com/NoTengoBattery/changelog-scraper/pull/10 | awk -F'\\x1d' '{printf "  * %s\n", $3}'
+```
+
 **[!] REMEBER**: the pipe output is not designed to be read by humans, that's why an `awk` script is needed to format the output.
 > **Warning**: `awk` is not available in Windows, and is not included in the native installed for Ruby. It is available on WSL and MinGW.
 
 #### Showing the interactive view
 ```shell
-changelog-scraper -u https://github.com/NoTengoBattery/changelog-scraper/pull/1
+changelog-scraper -u https://github.com/NoTengoBattery/changelog-scraper/pull/10
 ```
 
 For more information about the usage, refer to the manual page.
