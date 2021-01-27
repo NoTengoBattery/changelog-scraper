@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 
-ruby '>=2.7'
+ruby '>=2.5'
 
 gem 'curses', require: true
 gem 'http', require: true
 gem 'nokogiri', require: true
 gem 'optparse', require: true
-gem 'pry', group: :development
+gem 'pry-byebug', group: :development
 gem 'rspec', group: %i[development test]
 gem 'rubocop', group: :development
+gem 'time', require: true
+gem 'uri', require: true

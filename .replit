@@ -1,0 +1,5 @@
+run="./changelog-scraper -q -u https://github.com/NoTengoBattery/changelog-scraper/pull/10"
+language="ruby"
+
+[packager]
+ignoredPaths=[".bundle", ".git", ".github", "spec", "vendor"]
