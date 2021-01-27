@@ -22,7 +22,7 @@ class GitHubScraper
     @changelog.subject = header.first.text.strip
     @changelog.id = header.last.text.strip
     @changelog.time = title.css('relative-time').attribute('datetime').value.strip
-    @changelog.author = title.css('.author').text.strip
+    @changelog.author = title.css('.author').first.text.strip
     @changelog.url = @req_url
     @changelog.status = @dom.css('.gh-header-meta div span').first.text.strip
     @changelog.target_branch = branches.first.attribute('title').value.strip
