@@ -47,9 +47,15 @@ MyUtils.note('All information was correctly retrieved from the internet')
 begin
   printer = PrinterFactory.build(options.printer)
   printer.print_changelog(scraper.changelog)
-rescue Curses::BadArgumentError, RuntimeError
+rescue Curses::Error => e
+  e.backtrace
   MyUtils.exit_on_exception(
-    e, "The interactive window can not be smaller than certain dimentions. Use a bigger terminal window.\n#{MORE_HELP}",
-    SCRAPER_ECODE
+    e, "The Curses printer failed. This error can happen for two reasons:
+\t1. The screen is too small: please resize your screen
+\t2. This console does not support all curses functions: use other terminal emulator or TTY
+If you are using repl.it, the repl.it Console does not support resizing and Shell/Console does not support UTF-8.
+Please run this script in your local machine, most Linux terminal emulators and WSL support all functionality.
+#{MORE_HELP}",
+    PRINTER_ECODE
   )
 end
