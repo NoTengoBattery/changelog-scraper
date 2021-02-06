@@ -1,11 +1,11 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Capstone Project: Ruby: Changelog Scraper
+# Ruby: Changelog Scraper
 > A `git` changelog scraper that can retrieve information from changelogs, such as merge/pull requests, from git websites such as GitHub.
 
-![screenshot](./doc/screenshot.png)
+![screenshot](./doc/screenshot.gif)
 
-A capstone project is the closing project that students will solo-perform. Its goal is to assess the student's technical and professional skills from the course that it is closing. For this project, the student should develop a web scraper built with Ruby and Ruby Gems.
+An extensible, hackeable web scraper designed to show information from git websites such as GitHub. It acts as an standard UNIX tool and can be used as a pipe generator or as an interactive view.
 
 ## Built With
 - [Ruby](https://www.ruby-lang.org/en/)
